@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_11_12_230253) do
+ActiveRecord::Schema.define(version: 2019_11_12_235058) do
 
   create_table "forages", force: :cascade do |t|
     t.integer "mushroom_id"
@@ -23,7 +23,6 @@ ActiveRecord::Schema.define(version: 2019_11_12_230253) do
     t.string "name"
     t.string "coordinates"
     t.string "terrain"
-    t.string "tree_growth"
   end
 
   create_table "mushrooms", force: :cascade do |t|
