@@ -1,30 +1,25 @@
 
+## helper method to create x number of blank lines based on your argument
+def blank_spacer(num)
+    num.times do
+        puts ""
+    end
+end
 
 ## Puts out greeting when starting the app
 def welcome
-    puts ""
-    puts ""
-    puts ""
-    puts ""
+    blank_spacer(4)
     puts "             Welcome to the Mushroom Foraging app!"
     puts "    You can use this app to find mushrooms to forage, places"
     puts "        to forage, and log your recent foraging trips."
     puts ""
     puts "                    Hit ENTER to continue"
-    puts ""
-    puts ""
-    puts ""
-    puts ""
+    blank_spacer(4)
     user_input = gets.chomp
 end
 
 def menu_options
-    puts ""
-    puts ""
-    puts ""
-    puts ""
-    puts ""
-    puts ""
+    blank_spacer(6)
     puts "  To get started, choose from one of the following options"
     puts "################################################################################"
     puts ""
@@ -54,24 +49,15 @@ end
 
 def random_mushroom
     mushroom = Mushroom.all.sample
-    puts ""
-    puts ""
-    puts ""
+    blank_spacer(4)
     puts "  - The #{mushroom.name} Mushroom - ".upcase
     puts ""
     puts "    This mushroom is primarily found in #{mushroom.habitat}s."
     puts "  It is #{mushroom.edible? ? "edible" : "NOT edible"} and it is #{mushroom.poisonous? ? "POISONOUS." : "not poisonous."}"
     puts "  Go foraging #{mushroom.days_after_rain_til_growth} day(s) after rainfall for the"
     puts "  best chance to find the #{mushroom.name} mushroom."
-    puts ""
-    puts ""
-    puts ""
-    return ""
-    # t.string "name"
-    # t.string "habitat"
-    # t.boolean "edible?"
-    # t.boolean "poisonous?"
-    # t.integer "days_after_rain_til_growth"
+    blank_spacer(4)
+
 end
 
 
@@ -82,7 +68,7 @@ end
 ## decide whether or not to add a user class?
       
 def my_trips
-    puts ""
+    blank_spacer(4)
     puts "  Enter your full name to see your 5 most recent trips."
     puts ""
     user_input = gets.chomp.downcase
@@ -106,17 +92,17 @@ def my_trips
         puts "They were found in the #{location.terrain} region of #{location.name}."
         puts "This trip occurred on #{forage.created_at}"
         end
-        puts ""
-        puts ""
-        puts ""
+        blank_spacer(2)
         if forage.length < 5
             puts "You've only made #{forage.length} foraging trips. Get outside and pick more mushrooms!"
         end
-        puts ""
-        puts ""
-        puts ""
-        puts ""
+        blank_spacer(4)
     end
+end
+
+def find_new_area
+    blank_spacer(4)
+    puts ""
 end
 
 def menu_selection
