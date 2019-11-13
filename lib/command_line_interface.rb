@@ -7,6 +7,7 @@ def blank_spacer(num)
 end
 
 ## Puts out greeting when starting the app
+## Stretch goal: create an ASCII block title
 def welcome
     blank_spacer(4)
     puts "             Welcome to the Mushroom Foraging app!"
@@ -18,6 +19,9 @@ def welcome
     user_input = gets.chomp
 end
 
+
+## This method puts out all of the menu options. 
+## Stretch goal: add option to exit, reload menu after any selection
 def menu_options
     blank_spacer(6)
     puts "  To get started, choose from one of the following options"
@@ -46,7 +50,7 @@ def menu_options
     puts ""
 end
 
-
+## this method puts out a random mushroom and all of that mushrooms facts and features.
 def random_mushroom
     mushroom = Mushroom.all.sample
     blank_spacer(4)
@@ -60,13 +64,9 @@ def random_mushroom
 
 end
 
-
-
-## For Wednesday morning. You are starting work in the development branch. Your master branch has been pushed.
-## You will add a user class, then add the user_id to the join table.  ???
-## User class will have many forages           ??????????????
-## decide whether or not to add a user class?
-      
+## this method prompts the user for their name. Once received, it matches the name to 
+## a user, then returns the 5 most receng foraging trips for that user.
+## It puts out only the vital trip info for each trip.
 def my_trips
     blank_spacer(4)
     puts "  Enter your full name to see your 5 most recent trips."
@@ -83,11 +83,6 @@ def my_trips
         puts "Trip # #{index + 1}"
         puts "-------------"
         puts ""
-        # puts forage.id
-        # puts forage.mushroom_id
-        # puts forage.location_id
-        # puts forage.quantity_harvested
-        # puts forage.user_id
         puts "On this trip you picked #{forage.quantity_harvested} #{mushroom.name} mushroom(s)."
         puts "They were found in the #{location.terrain} region of #{location.name}."
         puts "This trip occurred on #{forage.created_at}"
@@ -100,17 +95,34 @@ def my_trips
     end
 end
 
+
+## method takes in a mushroom name, then returns all of the areas where it has been foraged.
+## stretch goal, order results by quantity of mushrooms foraged in that area.
 def find_new_area
     blank_spacer(4)
-    puts ""
+    puts "Enter the name of a mushroom to discover new areas you can forage for it."
+    user_input = gets.chomp.downcase
+    mushroom = Mushroom.find_by(name: "#{user_input.titleize}")
+    # forages = Forage.find_by(mushroom_id: mushroom.id).order(:location_id) ##this isn't working. Troubleshoot after lunch
+    blank_spacer(6)
+    # forages.each do |forage|
+    #     puts forage
+    # end
+    # puts mushroom.name
+    # puts mushroom.habitat
+    blank_spacer(4)
 end
 
+
+## this method identifies the user's menu input and loads the appropriate method.
+## Stretch goal: give error message if unknown prompt is entered, allow user to exit program, return to menu after command is run
 def menu_selection
     user_input = gets.chomp.downcase
     if user_input == "random mushroom"
         random_mushroom
     elsif user_input == "my trips"
         my_trips
+    elsif user_input == "find new area"
+        find_new_area
     end
-
 end
