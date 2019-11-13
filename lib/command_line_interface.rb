@@ -98,6 +98,7 @@ end
 
 ## method takes in a mushroom name, then returns all of the areas where it has been foraged.
 ## stretch goal, order results by quantity of mushrooms foraged in that area.
+## check out find_each for this query
 def find_new_area
     blank_spacer(4)
     puts "Enter the name of a mushroom to discover new areas you can forage for it."
@@ -114,6 +115,52 @@ def find_new_area
 end
 
 
+## This method prompts a user to type in a location, then returns all of the mushrooms
+## that have been foraged in that area.
+## come back to this
+def find_new_mushroom
+    blank_spacer(4)
+    puts "Enter the name of a location to discover new mushrooms in that area."
+    user_input = gets.chomp.downcase
+    location = Location.find_by(name: "#{user_input.titleize}")
+    location_forages = Forage.find_by(location_id: location.id)
+    location_forages.each do |forage|
+        puts forage.mushroom_id
+    end
+end
+
+def log_trip
+    blank_spacer(4)
+    puts "Let's log your recent foraging trip. Please enter your full name"
+    user_name = gets.chomp.downcase.titleize
+    user = User.find_or_create_by(name: user_name) {|user| user.age = rand(15..78)}
+    puts user.name
+    blank_spacer(2)
+    puts "Thank you #{user.name}. Now enter the name of the location where you foraged."
+    loc_input = gets.chomp.downcase.titleize
+    location = Location.find_or_create_by(name: loc_input)
+    puts location.name
+    blank_spacer(2)
+    puts "Thank you. Which mushroom did you forage?"
+    mush_input = gets.chomp.downcase.titleize
+    mushroom = Mushroom.find_or_create_by(name: mush_input)
+    puts mushroom.name
+    blank_spacer(2)
+    puts "Great - lastly, how many #{mushroom.name} mushrooms did you harvest on this trip?"
+    qty_input = gets.chomp
+    forage = Forage.create(mushroom_id: mushroom, location_id: location, quantity_harvested: qty_input, user_id: user)
+    puts forage.mushroom_id
+    blank_spacer(6)
+    puts "Awesome! Here are the details of your recent foraging trip:"
+    puts "-----------------------------------------------------------"
+    blank_spacer(2)
+    puts "The mushroom ID is #{mushroom.id}"
+    puts "The forage location ID is #{location.id}"
+    puts "The forage user ID is #{user.id}"
+    puts "The quantity harvested is #{forage.quantity_harvested}"
+    blank_spacer(4)
+end
+
 ## this method identifies the user's menu input and loads the appropriate method.
 ## Stretch goal: give error message if unknown prompt is entered, allow user to exit program, return to menu after command is run
 def menu_selection
@@ -124,5 +171,9 @@ def menu_selection
         my_trips
     elsif user_input == "find new area"
         find_new_area
+    elsif user_input == "find new mushroom"
+        find_new_mushroom
+    elsif user_input == "log trip"
+        log_trip 
     end
 end
