@@ -40,7 +40,7 @@ def menu_options
     puts ""
     puts "  LOG TRIP          - Log the results of your recent foraging trip."
     puts ""
-    puts "  UPDATE TRIP       - Update the information in one of your recent entries."
+    puts "  UPDATE QUANTITY   - Update the quantity of mushrooms harvested in your last entry."
     puts ""
     puts "  DELETE TRIP       - Delete a recent foraging trip."
     puts ""
@@ -72,27 +72,33 @@ def my_trips
     puts "  Enter your full name to see your 5 most recent trips."
     puts ""
     user_input = gets.chomp.downcase
-    if User.find_by(name: "Devin Kelly")
         user = User.find_by(name: "#{user_input.titleize}")
-        forage = Forage.where(user_id: user.id).order(created_at: :desc).limit(5)
-        forage.each_with_index do |forage, index|
-            mushroom = Mushroom.find(forage.mushroom_id)
-            location = Location.find(forage.location_id)
-        puts ""
-        puts ""
-        puts "Trip # #{index + 1}"
-        puts "-------------"
-        puts ""
-        puts "On this trip you picked #{forage.quantity_harvested} #{mushroom.name} mushroom(s)."
-        puts "They were found in the #{location.terrain} region of #{location.name}."
-        puts "This trip occurred on #{forage.created_at}"
-        end
-        blank_spacer(2)
-        if forage.length < 5
-            puts "You've only made #{forage.length} foraging trips. Get outside and pick more mushrooms!"
-        end
+        forage = nil
+        if user != nil
+            forage = Forage.where(user_id: user.id).order(created_at: :desc).limit(5)
+            forage.each_with_index do |forage, index|
+                mushroom = Mushroom.find(forage.mushroom_id)
+                location = Location.find(forage.location_id)
+            puts ""
+            puts ""
+            puts "Trip # #{index + 1}"
+            puts "-------------"
+            puts ""
+            puts "On this trip you picked #{forage.quantity_harvested} #{mushroom.name} mushroom(s)."
+            puts "They were found in the #{location.terrain} region of #{location.name}."
+            puts "This trip occurred on #{forage.created_at}"
+            end
+            blank_spacer(2)
+            if forage.length < 5
+                puts "You've only made #{forage.length} foraging trips. Get outside and pick more mushrooms!"
+            end
+        else
+            puts "No such user found. Log your first trip so you can start tracking your foraging."
         blank_spacer(4)
-    end
+        
+        # binding.pry
+        end
+    return forage
 end
 
 
@@ -138,7 +144,7 @@ def log_trip
     blank_spacer(2)
     puts "Thank you #{user.name}. Now enter the name of the location where you foraged."
     loc_input = gets.chomp.downcase.titleize
-    location = Location.find_or_create_by(name: loc_input)
+    location = Location.find_or_create_by(name: loc_input) {|location| location.terrain = ["hilly", "flat", "mountainous"].sample}
     puts location.name
     blank_spacer(2)
     puts "Thank you. Which mushroom did you forage?"
@@ -148,18 +154,72 @@ def log_trip
     blank_spacer(2)
     puts "Great - lastly, how many #{mushroom.name} mushrooms did you harvest on this trip?"
     qty_input = gets.chomp
-    forage = Forage.create(mushroom_id: mushroom, location_id: location, quantity_harvested: qty_input, user_id: user)
+    forage = Forage.create(mushroom_id: mushroom.id, location_id: location.id, quantity_harvested: qty_input, user_id: user.id)
     puts forage.mushroom_id
     blank_spacer(6)
     puts "Awesome! Here are the details of your recent foraging trip:"
     puts "-----------------------------------------------------------"
     blank_spacer(2)
-    puts "The mushroom ID is #{mushroom.id}"
-    puts "The forage location ID is #{location.id}"
-    puts "The forage user ID is #{user.id}"
-    puts "The quantity harvested is #{forage.quantity_harvested}"
+    # puts "The mushroom ID is #{forage.mushroom_id}"
+    # puts "The forage location ID is #{forage.location_id}"
+    # puts "The forage user ID is #{user.id}"
+    # puts "The quantity harvested is #{forage.quantity_harvested}"
+    puts "On this trip you picked #{forage.quantity_harvested} #{mushroom.name} mushroom(s)."
+    puts "They were found in the #{location.terrain} region of #{location.name}."
+    puts "This trip occurred on #{forage.created_at.strftime("%m-%d-%Y")}"
     blank_spacer(4)
 end
+
+
+## This method udpates the quantity of mushrooms logged in the most recent entry.
+## stretch goal: expand the functionality of this method to include updating
+## one or multiple attributes of the recent entry.
+def update_quantity
+blank_spacer(4)
+puts "Here is your recent trip info:"
+puts "-------------------------------"
+forage = Forage.last
+mushroom = Mushroom.find(forage.mushroom_id)
+location = Location.find(forage.location_id)
+puts "On this trip you picked #{forage.quantity_harvested} #{mushroom.name} mushroom(s)."
+puts "They were found in the #{location.terrain} region of #{location.name}."
+puts "This trip occurred on #{forage.created_at.strftime("%m-%d-%Y")}"
+blank_spacer(4)
+puts "Ok, let's update this entry."
+blank_spacer(2)
+puts "What is the updated quantity of #{mushroom.name} mushrooms you'd like to log?"
+user_input = gets.chomp
+Forage.update(forage.id, quantity_harvested: user_input)
+forage = Forage.last
+blank_spacer(4)
+puts "Great, here's your updated entry:"
+puts "----------------------------------"
+blank_spacer(2)
+puts "On this trip you picked #{forage.quantity_harvested} #{mushroom.name} mushroom(s)."
+puts "They were found in the #{location.terrain} region of #{location.name}."
+puts "This trip occurred on #{forage.created_at.strftime("%m-%d-%Y")}"
+end
+
+## deletes a foraging instance. 
+def delete_trip
+    trips = my_trips
+    blank_spacer(4)
+    puts "Enter the number of the trip that you would like to delete (ex. 2)"
+     blank_spacer(4)
+     user_input = gets.chomp.to_i
+     index = user_input - 1
+     id_to_delete = trips[index].id
+     puts "Are you absolutely sure you want to delete this trip? Once deleted, it cannot be recovered."
+     puts "To delete this trip, type YES"
+     blank_spacer(4)
+     user_input = gets.chomp.downsize
+     if user_input == "yes"
+        Forage.delete(id_to_delete)
+        blank_spacer(2)
+        puts "Your trip has been deleted."
+     end
+end
+
 
 ## this method identifies the user's menu input and loads the appropriate method.
 ## Stretch goal: give error message if unknown prompt is entered, allow user to exit program, return to menu after command is run
@@ -175,5 +235,9 @@ def menu_selection
         find_new_mushroom
     elsif user_input == "log trip"
         log_trip 
+    elsif user_input == "update quantity"
+        update_quantity
+    elsif user_input == "delete trip"
+        delete_trip
     end
 end
