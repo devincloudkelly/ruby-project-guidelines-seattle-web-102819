@@ -9,3 +9,4 @@ gem "rake"
 gem 'activerecord', "~>5.2.3"
 gem 'random-location'
 gem "faker"
+gem 'activerecord-reset-pk-sequence'

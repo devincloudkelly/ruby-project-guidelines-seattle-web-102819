@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_11_13_003859) do
+ActiveRecord::Schema.define(version: 2019_11_13_170536) do
 
   create_table "forages", force: :cascade do |t|
     t.integer "mushroom_id"
@@ -18,6 +18,7 @@ ActiveRecord::Schema.define(version: 2019_11_13_003859) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "quantity_harvested"
+    t.integer "user_id"
   end
 
   create_table "locations", force: :cascade do |t|
@@ -32,6 +33,11 @@ ActiveRecord::Schema.define(version: 2019_11_13_003859) do
     t.boolean "edible?"
     t.boolean "poisonous?"
     t.integer "days_after_rain_til_growth"
+  end
+
+  create_table "users", force: :cascade do |t|
+    t.string "name"
+    t.integer "age"
   end
 
 end

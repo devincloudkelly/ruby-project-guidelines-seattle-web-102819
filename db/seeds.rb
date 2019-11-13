@@ -1,3 +1,12 @@
+Mushroom.delete_all
+Location.delete_all
+User.delete_all
+Forage.delete_all
+Mushroom.reset_pk_sequence
+Location.reset_pk_sequence
+User.reset_pk_sequence
+Forage.reset_pk_sequence
+
 
 ## mushroom instances
 habitat_options = ["deciduous forest", "coniferous forest", "mixed forest"]
@@ -36,22 +45,42 @@ Location.create(name: Faker::Games::Zelda.location, coordinates: coordinates.sam
 Location.create(name: Faker::Games::Zelda.location, coordinates: coordinates.sample, terrain: terrain_options.sample)
 
 
+## User instances
+User.create(name: "Devin Kelly", age: 32)
+User.create(name: Faker::Name.name, age: rand(15..78))
+User.create(name: Faker::Name.name, age: rand(15..78))
+User.create(name: Faker::Name.name, age: rand(15..78))
+User.create(name: Faker::Name.name, age: rand(15..78))
+User.create(name: Faker::Name.name, age: rand(15..78))
+User.create(name: Faker::Name.name, age: rand(15..78))
+User.create(name: Faker::Name.name, age: rand(15..78))
+User.create(name: Faker::Name.name, age: rand(15..78))
+User.create(name: Faker::Name.name, age: rand(15..78))
+User.create(name: Faker::Name.name, age: rand(15..78))
+User.create(name: Faker::Name.name, age: rand(15..78))
+User.create(name: Faker::Name.name, age: rand(15..78))
+
 
 ## forage instances
-Forage.create(mushroom_id: Mushroom.all.sample.id, location_id: Location.all.sample.id, quantity_harvested: rand(1..18))
-Forage.create(mushroom_id: Mushroom.all.sample.id, location_id: Location.all.sample.id, quantity_harvested: rand(1..18))
-Forage.create(mushroom_id: Mushroom.all.sample.id, location_id: Location.all.sample.id, quantity_harvested: rand(1..18))
-Forage.create(mushroom_id: Mushroom.all.sample.id, location_id: Location.all.sample.id, quantity_harvested: rand(1..18))
-Forage.create(mushroom_id: Mushroom.all.sample.id, location_id: Location.all.sample.id, quantity_harvested: rand(1..18))
-Forage.create(mushroom_id: Mushroom.all.sample.id, location_id: Location.all.sample.id, quantity_harvested: rand(1..18))
-Forage.create(mushroom_id: Mushroom.all.sample.id, location_id: Location.all.sample.id, quantity_harvested: rand(1..18))
-Forage.create(mushroom_id: Mushroom.all.sample.id, location_id: Location.all.sample.id, quantity_harvested: rand(1..18))
-Forage.create(mushroom_id: Mushroom.all.sample.id, location_id: Location.all.sample.id, quantity_harvested: rand(1..18))
-Forage.create(mushroom_id: Mushroom.all.sample.id, location_id: Location.all.sample.id, quantity_harvested: rand(1..18))
-Forage.create(mushroom_id: Mushroom.all.sample.id, location_id: Location.all.sample.id, quantity_harvested: rand(1..18))
-Forage.create(mushroom_id: Mushroom.all.sample.id, location_id: Location.all.sample.id, quantity_harvested: rand(1..18))
-Forage.create(mushroom_id: Mushroom.all.sample.id, location_id: Location.all.sample.id, quantity_harvested: rand(1..18))
-Forage.create(mushroom_id: Mushroom.all.sample.id, location_id: Location.all.sample.id, quantity_harvested: rand(1..18))
-Forage.create(mushroom_id: Mushroom.all.sample.id, location_id: Location.all.sample.id, quantity_harvested: rand(1..18))
-Forage.create(mushroom_id: Mushroom.all.sample.id, location_id: Location.all.sample.id, quantity_harvested: rand(1..18))
-Forage.create(mushroom_id: Mushroom.all.sample.id, location_id: Location.all.sample.id, quantity_harvested: rand(1..18))
+Forage.create(mushroom_id: Mushroom.all.sample.id, location_id: Location.all.sample.id, quantity_harvested: rand(1..18), user_id: User.all.sample.id)
+Forage.create(mushroom_id: Mushroom.all.sample.id, location_id: Location.all.sample.id, quantity_harvested: rand(1..18), user_id: User.all.sample.id)
+Forage.create(mushroom_id: Mushroom.all.sample.id, location_id: Location.all.sample.id, quantity_harvested: rand(1..18), user_id: User.all.sample.id)
+Forage.create(mushroom_id: Mushroom.all.sample.id, location_id: Location.all.sample.id, quantity_harvested: rand(1..18), user_id: User.all.sample.id)
+Forage.create(mushroom_id: Mushroom.all.sample.id, location_id: Location.all.sample.id, quantity_harvested: rand(1..18), user_id: User.all.sample.id)
+Forage.create(mushroom_id: Mushroom.all.sample.id, location_id: Location.all.sample.id, quantity_harvested: rand(1..18), user_id: User.all.sample.id)
+Forage.create(mushroom_id: Mushroom.all.sample.id, location_id: Location.all.sample.id, quantity_harvested: rand(1..18), user_id: User.all.sample.id)
+Forage.create(mushroom_id: Mushroom.all.sample.id, location_id: Location.all.sample.id, quantity_harvested: rand(1..18), user_id: User.all.sample.id)
+Forage.create(mushroom_id: Mushroom.all.sample.id, location_id: Location.all.sample.id, quantity_harvested: rand(1..18), user_id: User.all.sample.id)
+Forage.create(mushroom_id: Mushroom.all.sample.id, location_id: Location.all.sample.id, quantity_harvested: rand(1..18), user_id: User.all.sample.id)
+Forage.create(mushroom_id: Mushroom.all.sample.id, location_id: Location.all.sample.id, quantity_harvested: rand(1..18), user_id: User.all.sample.id)
+Forage.create(mushroom_id: Mushroom.all.sample.id, location_id: Location.all.sample.id, quantity_harvested: rand(1..18), user_id: User.all.sample.id)
+Forage.create(mushroom_id: Mushroom.all.sample.id, location_id: Location.all.sample.id, quantity_harvested: rand(1..18), user_id: User.all.sample.id)
+Forage.create(mushroom_id: Mushroom.all.sample.id, location_id: Location.all.sample.id, quantity_harvested: rand(1..18), user_id: User.all.sample.id)
+Forage.create(mushroom_id: Mushroom.all.sample.id, location_id: Location.all.sample.id, quantity_harvested: rand(1..18), user_id: User.all.sample.id)
+Forage.create(mushroom_id: Mushroom.all.sample.id, location_id: Location.all.sample.id, quantity_harvested: rand(1..18), user_id: User.all.sample.id)
+Forage.create(mushroom_id: Mushroom.all.sample.id, location_id: Location.all.sample.id, quantity_harvested: rand(1..18), user_id: User.all.sample.id)
+Forage.create(mushroom_id: Mushroom.all.sample.id, location_id: Location.all.sample.id, quantity_harvested: rand(1..18), user_id: User.all.sample.id)
+Forage.create(mushroom_id: Mushroom.all.sample.id, location_id: Location.all.sample.id, quantity_harvested: rand(1..18), user_id: User.all.sample.id)
+Forage.create(mushroom_id: Mushroom.all.sample.id, location_id: Location.all.sample.id, quantity_harvested: rand(1..18), user_id: User.all.sample.id)
+Forage.create(mushroom_id: Mushroom.all.sample.id, location_id: Location.all.sample.id, quantity_harvested: rand(1..18), user_id: User.all.sample.id)
+

@@ -74,8 +74,15 @@ def random_mushroom
     # t.integer "days_after_rain_til_growth"
 end
 
+
+
+## For Wednesday morning. You are starting work in the development branch. Your master branch has been pushed.
+## You will add a user class, then add the user_id to the join table.  ???
+## User class will have many forages           ??????????????
+## decide whether or not to add a user class?
+      
 def my_trips
-    
+
 end
 
 def menu_selection
