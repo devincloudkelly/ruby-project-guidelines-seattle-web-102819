@@ -114,19 +114,21 @@ def my_trips
             puts "Trip # #{index + 1}"
             puts "-------------"
             puts ""
+            puts "Forage ID: #{forage.id}"
             puts "On this trip you picked #{forage.quantity_harvested} #{mushroom.name} mushroom(s)."
             puts "They were found in the #{location.terrain} region of #{location.name}."
-            puts "This trip occurred on #{forage.created_at}"
+            puts "This trip occurred on #{forage.created_at.strftime("%m-%d-%Y")}"
             end
             blank_spacer(2)
-            if forage.length < 5
+            if forage.length < 5 && forage.length > 0
                 puts "You've only made #{forage.length} foraging trips. Get outside and pick more mushrooms!"
             end
         else
+            blank_spacer(4)
             puts "No such user found. Log your first trip so you can start tracking your foraging."
-        blank_spacer(4)
-        
-        # binding.pry
+            # puts "Press any key to continue"
+            return nil
+        blank_spacer(2)
         end
     return forage
 end
@@ -239,31 +241,35 @@ end
 def delete_trip
     trips = my_trips
     blank_spacer(4)
-    if trips.length < 1
-        puts "It looks like you haven't logged any foraging trips yet."
-        puts "Press any key to exit."
-        user_input = gets.chomp
+    # binding.pry
+    if trips == nil
         return
     else
     puts "Enter the number of the trip that you would like to delete (ex. 2)"
-     blank_spacer(4)
+     blank_spacer(2)
      user_input = gets.chomp.to_i
      index = user_input - 1
      id_to_delete = trips[index].id
      puts "Are you absolutely sure you want to delete this trip? Once deleted, it cannot be recovered."
-     puts "To delete this trip, type YES"
-     blank_spacer(4)
-     user_input = gets.chomp.downsize
-     if user_input == "yes"
-        Forage.delete(id_to_delete)
-        blank_spacer(2)
-        puts "Your trip has been deleted."
-     end
+     puts "To delete this trip, type YES. To stop deletion, type NO"
+     blank_spacer(2)
+     user_input = gets.chomp.downcase
+        if user_input == "yes"
+            Forage.delete(id_to_delete)
+            blank_spacer(2)
+            puts "Your trip has been deleted."
+        elsif user_input == "no"
+            return
+        else
+            blank_spacer(2)
+            puts "I'm sorry, that isn't a valid command."
+            blank_spacer(2)
+        end
     end
 end
 
 def more_commands?
-    puts "Would you like to do anything else? Type YES or NO"
+    puts "Would you like to do anything else? Type YES to return to the menu or NO to exit the program"
     blank_spacer(2)
     user_input = gets.chomp.downcase
     if user_input == "yes"
@@ -318,10 +324,11 @@ end
 
 ## For Thursday:
 ###### Finalize control flow of each method and the run file  COMPLETE
-## Have #my_trips puts out the forage id for your forage trips. 
+###### Have #my_trips puts out the forage id for your forage trips. COMPLETE
 ## Then change #delete_trip to delete trips based on forage id #.
-## Add NO input to stop delete
 ## This will allow user to delete records in bulk
+###### Add NO input to stop delete COMPLETE
+###### Fix "no user found" issue in #delete_trip COMPLETE
 ## Need to clean up seeds so that mushroom and location names are removed each time they are entered.
 ## Also need to clean up the poisonous / edible options. Pick one or the other
 ## Stretch  method - is it poisonous?
