@@ -55,10 +55,14 @@ def menu_options
     puts "  To get started, enter any of the following commands"
     puts "################################################################################"
     puts ""
-    puts "  RANDOM MUSHROOM   - Expand your knowledge. This generates a random mushroom instance."
-    puts ""
     puts "  MY TRIPS          - Shows you the results of your recent foraging trips. See"
     puts "                      how many mushrooms were collected, what type and where."
+    puts ""
+    puts "  LOG TRIP          - Log the results of your recent foraging trip."
+    puts ""
+    puts "  UPDATE QUANTITY   - Update the quantity of mushrooms harvested in your last entry."
+    puts ""
+    puts "  DELETE TRIP       - Delete a recent foraging trip."
     puts ""
     # puts "  FIND NEW AREA     - Enter the name of a mushroom you'd like to harvest and"
     # puts "                      get a list of all the areas where this mushroom is found."
@@ -66,11 +70,9 @@ def menu_options
     puts "  FIND NEW MUSHROOM - Enter the name of an area you'd like to forage in to "
     puts "                      get a list of all the mushrooms found there."
     puts ""
-    puts "  LOG TRIP          - Log the results of your recent foraging trip."
+    puts "  RANDOM MUSHROOM   - Expand your knowledge. This generates a random mushroom instance."
     puts ""
-    puts "  UPDATE QUANTITY   - Update the quantity of mushrooms harvested in your last entry."
-    puts ""
-    puts "  DELETE TRIP       - Delete a recent foraging trip."
+    puts "  RANDOM AREA       - Expand your knowledge. This generates a random location instance."
     puts ""
     # puts "  LOCAL EDIBLES     - Find edible mushrooms within X distance of you."
     # puts ""
@@ -92,7 +94,17 @@ def random_mushroom
     puts "  Go foraging #{mushroom.days_after_rain_til_growth} day(s) after rainfall for the"
     puts "  best chance to find the #{mushroom.name} mushroom."
     blank_spacer(4)
+end
 
+## this method puts out a random location and all of it's vital info.
+def random_area
+    location = Location.all.sample
+    blank_spacer(4)
+    puts "  - #{location.name} - ".upcase
+    puts ""
+    puts "    This location primarily consists of #{location.terrain} terrain."
+    puts "  It is located at #{location.coordinates}."
+    blank_spacer(4)
 end
 
 ## this method prompts the user for their name. Once received, it matches the name to 
@@ -274,6 +286,7 @@ def delete_trip
     end
 end
 
+
 def more_commands?
     puts "Would you like to do anything else? Type YES to return to the menu or NO to exit the program"
     blank_spacer(2)
@@ -292,6 +305,10 @@ def menu_selection
     while user_input != "exit" do
         if user_input == "random mushroom"
             random_mushroom
+            more_commands?
+            break
+        elsif user_input == "random area"
+            random_area
             more_commands?
             break
         elsif user_input == "my trips"
@@ -320,8 +337,8 @@ def menu_selection
             break
         else
             blank_spacer(4)
-            puts "I'm sorry, that isn't an available command. Please type a command from the list"
-            puts "or type EXIT to exit the program."
+            puts "I'm sorry, that isn't an available command. Please type MENU to see all"
+            puts "available commands or type EXIT to exit the program."
             blank_spacer(4)
             user_input = gets.chomp.downcase
             if user_input == "menu"
@@ -339,10 +356,16 @@ end
 ###### Add NO input to stop delete COMPLETE
 ###### Fix "no user found" issue in #delete_trip COMPLETE
 ###### Need to clean up seeds so that mushroom and location names are removed each time they are entered. COMPLETE
-## Fix #find_new_mushroom, returns error with manually created location
-## Then change #delete_trip to delete trips based on forage id #.
-## This will allow user to delete records in bulk
+###### Fix #find_new_mushroom, returns error with manually created location COMPLETE (issue was with AR search)
+###### merge branch back with main COMPLETE
+###### Created random location method COMPLETE
 ## Also need to clean up the poisonous / edible options. Pick one or the other
-## Stretch  method - is it poisonous?
-## merge branch back with main
+## Stretch method - #my_mushrooms lists out all of your mushrooms from all of your trips.
+## Stretch  method - Eat A Mushroom? Will puts out different things based on the edibility or poison content of the mushroom. 
+## calls on #my_mushrooms to see which you have.    
 ## Add credits method
+
+
+## Potential methods
+## Change #delete_trip to delete trips based on forage id #.
+## This will allow user to delete records in bulk
