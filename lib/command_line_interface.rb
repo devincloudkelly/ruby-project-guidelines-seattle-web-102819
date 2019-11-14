@@ -108,7 +108,7 @@ def random_area
 end
 
 ## this method prompts the user for their name. Once received, it matches the name to 
-## a user, then returns the 5 most receng foraging trips for that user.
+## a user, then returns the 5 most recent foraging trips for that user.
 ## It puts out only the vital trip info for each trip.
 def my_trips
     blank_spacer(4)
