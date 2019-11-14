@@ -7,9 +7,9 @@ def blank_spacer(num)
 end
 
 ## This helper method advises if the user input is invalid and returns an error message
-def input_invalid(required_input)
+# def input_invalid(required_input)
     
-end
+# end
 
 ## Puts out greeting when starting the app
 ## Stretch goal: create an ASCII block title
@@ -159,15 +159,15 @@ def find_new_mushroom
     puts "Enter the name of a location to discover new mushrooms in that area."
     user_input = gets.chomp.downcase
     location = Location.find_by(name: "#{user_input.titleize}")
-    if location != nil
+    # if location != nil
         location_forages = Forage.find_by(location_id: location.id)
         location_forages.each do |forage|
             puts forage.mushroom_id
         end
-    else 
-        puts "That location name is not valid. Returning you to the MENU"
-        return
-    end
+    # else 
+    #     puts "That location name is not valid. Returning you to the MENU"
+    #     return
+    # end
 end
 
 def log_trip
@@ -277,40 +277,50 @@ end
 ## Stretch goal: give error message if unknown prompt is entered, allow user to exit program, return to menu after command is run
 def menu_selection
     user_input = gets.chomp.downcase
-    if user_input == "exit"
-        return
-    elsif user_input == "random mushroom"
-        random_mushroom
-        more_commands?
-    elsif user_input == "my trips"
-        my_trips
-        more_commands?
-    elsif user_input == "find new area"
-        find_new_area
-        more_commands?
-    elsif user_input == "find new mushroom"
-        find_new_mushroom
-        more_commands?
-    elsif user_input == "log trip"
-        log_trip 
-        more_commands?
-    elsif user_input == "update quantity"
-        update_quantity
-        more_commands?
-    elsif user_input == "delete trip"
-        delete_trip
-        more_commands?
-    else
-        blank_spacer(4)
-        puts "I'm sorry, that isn't an available command. Please type a command from the list"
-        puts "or type EXIT to exit the program."
-        blank_spacer(4)
+    while user_input != "exit" do
+        if user_input == "random mushroom"
+            random_mushroom
+            more_commands?
+            break
+        elsif user_input == "my trips"
+            my_trips
+            more_commands?
+            break
+        elsif user_input == "find new area"
+            find_new_area
+            more_commands?
+            break
+        elsif user_input == "find new mushroom"
+            find_new_mushroom
+            more_commands?
+            break
+        elsif user_input == "log trip"
+            log_trip 
+            more_commands?
+            break
+        elsif user_input == "update quantity"
+            update_quantity
+            more_commands?
+            break
+        elsif user_input == "delete trip"
+            delete_trip
+            more_commands?
+            break
+        else
+            blank_spacer(4)
+            puts "I'm sorry, that isn't an available command. Please type a command from the list"
+            puts "or type EXIT to exit the program."
+            blank_spacer(4)
+        end
+        break if user_input == "exit"
     end
 end
 
 ## For Thursday:
+###### Finalize control flow of each method and the run file  COMPLETE
 ## Have #my_trips puts out the forage id for your forage trips. 
 ## Then change #delete_trip to delete trips based on forage id #.
+## Add NO input to stop delete
 ## This will allow user to delete records in bulk
 ## Need to clean up seeds so that mushroom and location names are removed each time they are entered.
 ## Also need to clean up the poisonous / edible options. Pick one or the other
