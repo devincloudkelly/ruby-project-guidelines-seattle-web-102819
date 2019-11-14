@@ -90,7 +90,7 @@ def random_mushroom
     puts "  - The #{mushroom.name} Mushroom - ".upcase
     puts ""
     puts "    This mushroom is primarily found in #{mushroom.habitat}s."
-    puts "  It is #{mushroom.edible? ? "edible" : "NOT edible"} and it is #{mushroom.poisonous? ? "POISONOUS." : "not poisonous."}"
+    puts "  It is #{mushroom.edible? ? "edible" : "NOT edible"} and it is #{mushroom.poisonous?} poisonous."
     puts "  Go foraging #{mushroom.days_after_rain_til_growth} day(s) after rainfall for the"
     puts "  best chance to find the #{mushroom.name} mushroom."
     blank_spacer(4)
@@ -174,16 +174,19 @@ def find_new_mushroom
     puts "Enter the name of a location to discover new mushrooms in that area."
     user_input = gets.chomp.downcase.titleize
     location = Location.find_by(name: user_input)
+    mushrooms = []
     if location != nil
         blank_spacer(2)
         puts "These are the mushrooms that have been foraged in this area:"
         puts "------------------------------------------------------------"
         blank_spacer(2)
         location_forages = Forage.where(location_id: location.id)
-        location_forages.each do |forage|
+        location_forages.select do |forage|
             mushroom = Mushroom.find(forage.mushroom_id)
-            puts mushroom.name
+            mushrooms << mushroom.name
         end
+        mushrooms = mushrooms.uniq
+        puts mushrooms
         blank_spacer(2)
     else 
         blank_spacer(4)
@@ -214,10 +217,6 @@ def log_trip
     puts "Awesome! Here are the details of your recent foraging trip:"
     puts "-----------------------------------------------------------"
     blank_spacer(2)
-    # puts "The mushroom ID is #{forage.mushroom_id}"
-    # puts "The forage location ID is #{forage.location_id}"
-    # puts "The forage user ID is #{user.id}"
-    # puts "The quantity harvested is #{forage.quantity_harvested}"
     puts "Forage ID: #{forage.id}"
     puts "On this trip you picked #{forage.quantity_harvested} #{mushroom.name} mushroom(s)."
     puts "They were found in the #{location.terrain} region of #{location.name}."
@@ -286,6 +285,20 @@ def delete_trip
     end
 end
 
+## this method returns the mushrooms that you gathered in your 5 most recent trips. 
+## It returns the totals quantity for each mushroom that you foraged.
+def my_mushrooms
+    trips = my_trips
+    mushrooms = {}
+    blank_spacer(4)
+    if trips == nil
+        return
+    else
+        trips.each do |trip|
+            puts trip.mushroom_id
+        end
+    end
+end
 
 def more_commands?
     puts "Would you like to do anything else? Type YES to return to the menu or NO to exit the program"
@@ -335,6 +348,10 @@ def menu_selection
             delete_trip
             more_commands?
             break
+        elsif user_input = "my mushrooms"
+            my_mushrooms
+            more_commands?
+            break
         else
             blank_spacer(4)
             puts "I'm sorry, that isn't an available command. Please type MENU to see all"
@@ -359,7 +376,7 @@ end
 ###### Fix #find_new_mushroom, returns error with manually created location COMPLETE (issue was with AR search)
 ###### merge branch back with main COMPLETE
 ###### Created random location method COMPLETE
-## Also need to clean up the poisonous / edible options. Pick one or the other
+###### Also need to clean up the poisonous / edible options. COMPLETE
 ## Stretch method - #my_mushrooms lists out all of your mushrooms from all of your trips.
 ## Stretch  method - Eat A Mushroom? Will puts out different things based on the edibility or poison content of the mushroom. 
 ## calls on #my_mushrooms to see which you have.    
