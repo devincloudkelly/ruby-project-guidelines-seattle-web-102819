@@ -285,8 +285,9 @@ def delete_trip
     end
 end
 
-## this method returns the mushrooms that you gathered in your 5 most recent trips. 
+## this method returns the sum of mushrooms that you gathered in your 5 most recent trips. 
 ## It returns the totals quantity for each mushroom that you foraged.
+## Values are saved in a hash with mushroom_id as the key and quantity as the value
 def my_mushrooms
     trips = my_trips
     mushrooms = {}
@@ -295,9 +296,24 @@ def my_mushrooms
         return
     else
         trips.each do |trip|
-            puts trip.mushroom_id
+            if !mushrooms[trip.mushroom_id]
+                mushrooms[trip.mushroom_id] = 0
+                mushrooms[trip.mushroom_id] += trip.quantity_harvested
+            else
+                mushrooms[trip.mushroom_id] += trip.quantity_harvested
+            end
         end
     end
+    blank_spacer(2)
+    puts "Your total recent harvest is comprised of:"
+    puts "---------------------------------------------------------"
+    blank_spacer(2)
+    mushrooms.each do |id, qty|
+        name = Mushroom.find(id).name
+        puts "#{qty} #{name} mushrooms"
+    end
+    blank_spacer(2)
+    mushrooms
 end
 
 def more_commands?
@@ -367,6 +383,13 @@ def menu_selection
     end
 end
 
+# def eat_a_mushroom
+#     blank_spacer(2)
+#     puts "Do you want to eat one of your mushrooms or a random one?"
+#     puts ""
+#     user_input = gets.chomp.downcase
+# end
+
 ## For Thursday:
 ###### Finalize control flow of each method and the run file  COMPLETE
 ###### Have #my_trips puts out the forage id for your forage trips. COMPLETE
@@ -377,7 +400,8 @@ end
 ###### merge branch back with main COMPLETE
 ###### Created random location method COMPLETE
 ###### Also need to clean up the poisonous / edible options. COMPLETE
-## Stretch method - #my_mushrooms lists out all of your mushrooms from all of your trips.
+###### remove duplicates from #find_new_mushroom COMPLETE
+###### Stretch method - #my_mushrooms lists out all of your mushrooms from all of your trips. COMPLETE
 ## Stretch  method - Eat A Mushroom? Will puts out different things based on the edibility or poison content of the mushroom. 
 ## calls on #my_mushrooms to see which you have.    
 ## Add credits method
