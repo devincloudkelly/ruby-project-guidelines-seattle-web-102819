@@ -177,22 +177,18 @@ def log_trip
     puts "Let's log your recent foraging trip. Please enter your full name"
     user_name = gets.chomp.downcase.titleize
     user = User.find_or_create_by(name: user_name) {|user| user.age = rand(15..78)}
-    puts user.name
     blank_spacer(2)
     puts "Thank you #{user.name}. Now enter the name of the location where you foraged."
     loc_input = gets.chomp.downcase.titleize
     location = Location.find_or_create_by(name: loc_input) {|location| location.terrain = ["hilly", "flat", "mountainous"].sample}
-    puts location.name
     blank_spacer(2)
     puts "Thank you. Which mushroom did you forage?"
     mush_input = gets.chomp.downcase.titleize
     mushroom = Mushroom.find_or_create_by(name: mush_input)
-    puts mushroom.name
     blank_spacer(2)
     puts "Great - lastly, how many #{mushroom.name} mushrooms did you harvest on this trip?"
     qty_input = gets.chomp
     forage = Forage.create(mushroom_id: mushroom.id, location_id: location.id, quantity_harvested: qty_input, user_id: user.id)
-    puts forage.mushroom_id
     blank_spacer(6)
     puts "Awesome! Here are the details of your recent foraging trip:"
     puts "-----------------------------------------------------------"
@@ -201,6 +197,7 @@ def log_trip
     # puts "The forage location ID is #{forage.location_id}"
     # puts "The forage user ID is #{user.id}"
     # puts "The quantity harvested is #{forage.quantity_harvested}"
+    puts "Forage ID: #{forage.id}"
     puts "On this trip you picked #{forage.quantity_harvested} #{mushroom.name} mushroom(s)."
     puts "They were found in the #{location.terrain} region of #{location.name}."
     puts "This trip occurred on #{forage.created_at.strftime("%m-%d-%Y")}"
@@ -317,6 +314,11 @@ def menu_selection
             puts "I'm sorry, that isn't an available command. Please type a command from the list"
             puts "or type EXIT to exit the program."
             blank_spacer(4)
+            user_input = gets.chomp.downcase
+            if user_input == "menu"
+                menu_options
+            end
+            break
         end
         break if user_input == "exit"
     end
@@ -333,3 +335,4 @@ end
 ## Also need to clean up the poisonous / edible options. Pick one or the other
 ## Stretch  method - is it poisonous?
 ## merge branch back with main
+## Add credits method
