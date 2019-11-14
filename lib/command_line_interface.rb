@@ -6,15 +6,43 @@ def blank_spacer(num)
     end
 end
 
+## This helper method advises if the user input is invalid and returns an error message
+def input_invalid(required_input)
+    
+end
+
 ## Puts out greeting when starting the app
 ## Stretch goal: create an ASCII block title
 def welcome
-    blank_spacer(4)
-    puts "             Welcome to the Mushroom Foraging app!"
-    puts "    You can use this app to find mushrooms to forage, places"
-    puts "        to forage, and log your recent foraging trips."
+    blank_spacer(4)                                                                                                             
+puts "  88b           d88                          88                                                                     "  
+puts "  888b         d888                          88                                                                     "  
+puts "  88`8b       d8'88                          88                                                                     "  
+puts "  88 `8b     d8' 88  88       88  ,adPPYba,  88,dPPYba,   8b,dPPYba,   ,adPPYba,    ,adPPYba,   88,dPYba,,adPYba,   "  
+puts "  88  `8b   d8'  88  88       88  I8[    \"\"  88P'    \"8a  88P'   \"Y8  a8\"     \"8a  a8\"     \"8a  88P'   \"88\"    \"8a  "  
+puts "  88   `8b d8'   88  88       88   `\"Y8ba,   88       88  88          8b       d8  8b       d8  88      88      88  "  
+puts "  88    `888'    88  \"8a,   ,a88  aa    ]8I  88       88  88          \"8a,   ,a8\"  \"8a,   ,a8\"  88      88      88  "  
+puts "  88     `8'     88   `\"YbbdP'Y8  `\"YbbdP\"'  88       88  88           `\"YbbdP\"'    `\"YbbdP\"'   88      88      88  "  
+puts "                                                                                                                    "  
+puts "                                                                                                                    "  
+puts "                                                                                                                    "  
+puts "             88888888888                                                88                                          "  
+puts "             88                                                         ""                                          "  
+puts "             88                                                                                                     "  
+puts "             88aaaaa   ,adPPYba,   8b,dPPYba,  ,adPPYYba,   ,adPPYb,d8  88  8b,dPPYba,    ,adPPYb,d8                "  
+puts "             88\"\"\"\"\"  a8\"     \"8a  88P'   \"Y8  \"\"     `Y8  a8\"    `Y88  88  88P'   `\"8a  a8\"    `Y88                "  
+puts "             88       8b       d8  88          ,adPPPPP88  8b       88  88  88       88  8b       88                "  
+puts "             88       \"8a,   ,a8\"  88          88,    ,88  \"8a,   ,d88  88  88       88  \"8a,   ,d88                "  
+puts "             88        `\"YbbdP\"'   88          `\"8bbdP\"Y8   `\"YbbdP\"Y8  88  88       88   `\"YbbdP\"Y8                "  
+puts "                                                            aa,    ,88                    aa,    ,88                "  
+puts "                                                             \"Y8bbdP\"                      \"Y8bbdP\"                 "  
+puts ""  
+puts ""
+    puts "                                       Welcome to the Mushroom Foraging app!"
+    puts "                              You can use this app to find mushrooms to forage, places"
+    puts "                                  to forage, and log your recent foraging trips."
     puts ""
-    puts "                    Hit ENTER to continue"
+    puts "                                              Hit ENTER to continue"
     blank_spacer(4)
     user_input = gets.chomp
 end
@@ -24,7 +52,7 @@ end
 ## Stretch goal: add option to exit, reload menu after any selection
 def menu_options
     blank_spacer(6)
-    puts "  To get started, choose from one of the following options"
+    puts "  To get started, enter any of the following commands"
     puts "################################################################################"
     puts ""
     puts "  RANDOM MUSHROOM   - Expand your knowledge. This generates a random mushroom instance."
@@ -32,9 +60,9 @@ def menu_options
     puts "  MY TRIPS          - Shows you the results of your recent foraging trips. See"
     puts "                      how many mushrooms were collected, what type and where."
     puts ""
-    puts "  FIND NEW AREA     - Enter the name of a mushroom you'd like to harvest and"
-    puts "                      get a list of all the areas where this mushroom is found."
-    puts ""
+    # puts "  FIND NEW AREA     - Enter the name of a mushroom you'd like to harvest and"
+    # puts "                      get a list of all the areas where this mushroom is found."
+    # puts ""
     puts "  FIND NEW MUSHROOM - Enter the name of an area you'd like to forage in to "
     puts "                      get a list of all the mushrooms found there."
     puts ""
@@ -44,10 +72,12 @@ def menu_options
     puts ""
     puts "  DELETE TRIP       - Delete a recent foraging trip."
     puts ""
-    puts "  LOCAL EDIBLES     - Find edible mushrooms within X distance of you."
-    puts ""
+    # puts "  LOCAL EDIBLES     - Find edible mushrooms within X distance of you."
+    # puts ""
+    puts "  EXIT              - Exits out of the program"
     puts "###############################################################"
     puts ""
+    menu_selection
 end
 
 ## this method puts out a random mushroom and all of that mushrooms facts and features.
@@ -129,9 +159,14 @@ def find_new_mushroom
     puts "Enter the name of a location to discover new mushrooms in that area."
     user_input = gets.chomp.downcase
     location = Location.find_by(name: "#{user_input.titleize}")
-    location_forages = Forage.find_by(location_id: location.id)
-    location_forages.each do |forage|
-        puts forage.mushroom_id
+    if location != nil
+        location_forages = Forage.find_by(location_id: location.id)
+        location_forages.each do |forage|
+            puts forage.mushroom_id
+        end
+    else 
+        puts "That location name is not valid. Returning you to the MENU"
+        return
     end
 end
 
@@ -204,6 +239,12 @@ end
 def delete_trip
     trips = my_trips
     blank_spacer(4)
+    if trips.length < 1
+        puts "It looks like you haven't logged any foraging trips yet."
+        puts "Press any key to exit."
+        user_input = gets.chomp
+        return
+    else
     puts "Enter the number of the trip that you would like to delete (ex. 2)"
      blank_spacer(4)
      user_input = gets.chomp.to_i
@@ -218,26 +259,60 @@ def delete_trip
         blank_spacer(2)
         puts "Your trip has been deleted."
      end
+    end
 end
 
+def more_commands?
+    puts "Would you like to do anything else? Type YES or NO"
+    blank_spacer(2)
+    user_input = gets.chomp.downcase
+    if user_input == "yes"
+        menu_options
+    else
+        return
+    end
+end
 
 ## this method identifies the user's menu input and loads the appropriate method.
 ## Stretch goal: give error message if unknown prompt is entered, allow user to exit program, return to menu after command is run
 def menu_selection
     user_input = gets.chomp.downcase
-    if user_input == "random mushroom"
+    if user_input == "exit"
+        return
+    elsif user_input == "random mushroom"
         random_mushroom
+        more_commands?
     elsif user_input == "my trips"
         my_trips
+        more_commands?
     elsif user_input == "find new area"
         find_new_area
+        more_commands?
     elsif user_input == "find new mushroom"
         find_new_mushroom
+        more_commands?
     elsif user_input == "log trip"
         log_trip 
+        more_commands?
     elsif user_input == "update quantity"
         update_quantity
+        more_commands?
     elsif user_input == "delete trip"
         delete_trip
+        more_commands?
+    else
+        blank_spacer(4)
+        puts "I'm sorry, that isn't an available command. Please type a command from the list"
+        puts "or type EXIT to exit the program."
+        blank_spacer(4)
     end
 end
+
+## For Thursday:
+## Have #my_trips puts out the forage id for your forage trips. 
+## Then change #delete_trip to delete trips based on forage id #.
+## This will allow user to delete records in bulk
+## Need to clean up seeds so that mushroom and location names are removed each time they are entered.
+## Also need to clean up the poisonous / edible options. Pick one or the other
+## Stretch  method - is it poisonous?
+## merge branch back with main
