@@ -74,7 +74,8 @@ def menu_options
     puts ""
     # puts "  LOCAL EDIBLES     - Find edible mushrooms within X distance of you."
     # puts ""
-    puts "  EXIT              - Exits out of the program"
+    puts "  EXIT              - Exit out of the program"
+    puts ""
     puts "###############################################################"
     puts ""
     menu_selection
@@ -140,8 +141,8 @@ end
 def find_new_area
     blank_spacer(4)
     puts "Enter the name of a mushroom to discover new areas you can forage for it."
-    user_input = gets.chomp.downcase
-    mushroom = Mushroom.find_by(name: "#{user_input.titleize}")
+    user_input = gets.chomp.downcase.titleize
+    mushroom = Mushroom.find_by(name: user_input)
     # forages = Forage.find_by(mushroom_id: mushroom.id).order(:location_id) ##this isn't working. Troubleshoot after lunch
     blank_spacer(6)
     # forages.each do |forage|
@@ -159,17 +160,25 @@ end
 def find_new_mushroom
     blank_spacer(4)
     puts "Enter the name of a location to discover new mushrooms in that area."
-    user_input = gets.chomp.downcase
-    location = Location.find_by(name: "#{user_input.titleize}")
-    # if location != nil
-        location_forages = Forage.find_by(location_id: location.id)
+    user_input = gets.chomp.downcase.titleize
+    location = Location.find_by(name: user_input)
+    if location != nil
+        blank_spacer(2)
+        puts "These are the mushrooms that have been foraged in this area:"
+        puts "------------------------------------------------------------"
+        blank_spacer(2)
+        location_forages = Forage.where(location_id: location.id)
         location_forages.each do |forage|
-            puts forage.mushroom_id
+            mushroom = Mushroom.find(forage.mushroom_id)
+            puts mushroom.name
         end
-    # else 
-    #     puts "That location name is not valid. Returning you to the MENU"
-    #     return
-    # end
+        blank_spacer(2)
+    else 
+        blank_spacer(4)
+        puts "That location name is not valid."
+        blank_spacer(2)
+        return
+    end
 end
 
 def log_trip
@@ -327,11 +336,12 @@ end
 ## For Thursday:
 ###### Finalize control flow of each method and the run file  COMPLETE
 ###### Have #my_trips puts out the forage id for your forage trips. COMPLETE
-## Then change #delete_trip to delete trips based on forage id #.
-## This will allow user to delete records in bulk
 ###### Add NO input to stop delete COMPLETE
 ###### Fix "no user found" issue in #delete_trip COMPLETE
-## Need to clean up seeds so that mushroom and location names are removed each time they are entered.
+###### Need to clean up seeds so that mushroom and location names are removed each time they are entered. COMPLETE
+## Fix #find_new_mushroom, returns error with manually created location
+## Then change #delete_trip to delete trips based on forage id #.
+## This will allow user to delete records in bulk
 ## Also need to clean up the poisonous / edible options. Pick one or the other
 ## Stretch  method - is it poisonous?
 ## merge branch back with main
