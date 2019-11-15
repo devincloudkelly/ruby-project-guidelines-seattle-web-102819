@@ -30,16 +30,6 @@ To install:
 Thanks to @moliver4 for recommending the 'activerecord-reset-pk-sequence' gem.
 Thanks to @zamudio and @moliver4 for the help with control flow.
 
+
 ## License
 Created by Devin Kelly, November, 2019.
-
-5. Prepare a video demo (narration helps!) describing how a user would interact with your working project.
-    * The video should:
-      - Have an overview of your project.(2 minutes max)
-6. Prepare a presentation to follow your video.(3 minutes max)
-    * Your presentation should:
-      - Describe something you struggled to build, and show us how you ultimately implemented it in your code.
-      - Discuss 3 things you learned in the process of working on this project.
-      - Address, if anything, what you would change or add to what you have today?
-      - Present any code you would like to highlight.   
-
