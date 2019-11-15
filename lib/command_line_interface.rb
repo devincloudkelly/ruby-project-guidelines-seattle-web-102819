@@ -64,9 +64,9 @@ def menu_options
     puts ""
     puts "  DELETE TRIP       - Delete a recent foraging trip."
     puts ""
-    # puts "  FIND NEW AREA     - Enter the name of a mushroom you'd like to harvest and"
-    # puts "                      get a list of all the areas where this mushroom is found."
-    # puts ""
+    puts "  FIND NEW AREA     - Enter the name of a mushroom you'd like to harvest and"
+    puts "                      get a list of all the areas where this mushroom is found."
+    puts ""
     puts "  FIND NEW MUSHROOM - Enter the name of an area you'd like to forage in to "
     puts "                      get a list of all the mushrooms found there."
     puts ""
@@ -82,6 +82,19 @@ def menu_options
     puts ""
     menu_selection
 end
+
+def secret_menu
+    blank_spacer(6)
+    puts "  You've discovered the secret menu. Type a command.."
+    puts "################################################################################"
+    puts ""
+    puts "  EAT A MUSHROOM     - Eat one of the mushrooms and see what effect it has on you.."
+    puts ""
+    puts "################################################################################"
+    blank_spacer(4)
+    menu_selection
+end
+
 
 ## this method puts out a random mushroom and all of that mushrooms facts and features.
 def random_mushroom
@@ -153,16 +166,29 @@ end
 def find_new_area
     blank_spacer(4)
     puts "Enter the name of a mushroom to discover new areas you can forage for it."
+    blank_spacer(2)
     user_input = gets.chomp.downcase.titleize
     mushroom = Mushroom.find_by(name: user_input)
-    # forages = Forage.find_by(mushroom_id: mushroom.id).order(:location_id) ##this isn't working. Troubleshoot after lunch
-    blank_spacer(6)
-    # forages.each do |forage|
-    #     puts forage
-    # end
-    # puts mushroom.name
-    # puts mushroom.habitat
-    blank_spacer(4)
+    locations = []
+    if mushroom != nil
+        blank_spacer(2)
+        puts "These are the locations where you can find this mushroom:"
+        puts "------------------------------------------------------------"
+        blank_spacer(2)
+        mushroom_forages = Forage.where(mushroom_id: mushroom.id)
+        mushroom_forages.select do |forage|
+            location = Location.find(forage.location_id)
+            locations << location.name
+        end
+        locations = locations.uniq
+        puts locations
+        blank_spacer(2)
+    else 
+        blank_spacer(4)
+        puts "That mushroom name is not valid."
+        blank_spacer(2)
+        return
+    end
 end
 
 
@@ -172,6 +198,7 @@ end
 def find_new_mushroom
     blank_spacer(4)
     puts "Enter the name of a location to discover new mushrooms in that area."
+    blank_spacer(2)
     user_input = gets.chomp.downcase.titleize
     location = Location.find_by(name: user_input)
     mushrooms = []
@@ -476,6 +503,10 @@ def menu_selection
             break
         elsif user_input == "my mushrooms"
             my_mushrooms
+            more_commands?
+            break
+        elsif user_input == "secret menu"
+            secret_menu
             more_commands?
             break
         elsif user_input == "eat a mushroom"
