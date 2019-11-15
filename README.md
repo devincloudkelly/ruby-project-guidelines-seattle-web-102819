@@ -1,10 +1,11 @@
 ## Mushroom Foraging app
 
 
+
 ## Description
 This app let's you forage mushrooms in the world of Hyrule. All of the locations are from the Zelda universe, and most mushrooms are made up. You can log your foraging trips, discover locations and mushrooms, and there's even a hidden command to sample mushrooms..
 
-## Instructions
+
 
 ## Install Instructions
 
@@ -14,14 +15,14 @@ To install:
 
 - Run 'bundle install' to install all required gems.
 
-- Run the program with 'ruby bin/run.rb'
+- Run the program in your terminal with 'ruby bin/run.rb'
 
 
 ## Contributors guide
 
 
 ## License
-
+Created by Devin Kelly, November, 2019.
 
 5. Prepare a video demo (narration helps!) describing how a user would interact with your working project.
     * The video should:

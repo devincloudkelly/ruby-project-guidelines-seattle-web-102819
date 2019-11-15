@@ -6,43 +6,9 @@ def blank_spacer(num)
     end
 end
 
-def puts_name(model)
-    capital_model = model.titleize
-    model = capital_model.all.each {|model| puts model.name}
-end
-
-
-def welcome_two
-
-
-puts "     ______   __  __     ______        __         ______     ______     ______     __   __     _____        ______     ______                                     "
-puts "    /\__  _\ /\ \_\ \   /\  ___\      /\ \       /\  ___\   /\  ___\   /\  ___\   /\ "-.\ \   /\  __-.     /\  __ \   /\  ___\                                   "
-puts "    \/_/\ \/ \ \  __ \  \ \  __\      \ \ \____  \ \  __\   \ \ \__ \  \ \  __\   \ \ \-.  \  \ \ \/\ \    \ \ \/\ \  \ \  __\                                   "
-puts "       \ \_\  \ \_\ \_\  \ \_____\     \ \_____\  \ \_____\  \ \_____\  \ \_____\  \ \_\\"\_\  \ \____-     \ \_____\  \ \_\                                     "
-puts "        \/_/   \/_/\/_/   \/_____/      \/_____/   \/_____/   \/_____/   \/_____/   \/_/ \/_/   \/____/      \/_____/   \/_/                                     "
-puts "                                                                                                                                                                 "
-puts "                                                                                                                                                                 "
-puts "                                                                                                                                                                 "
-puts "                                                                                                                                                                 "
-puts "                                                                                                                                                                 "
-puts "                                                                                                                                                                 "
-puts "                                                                                                                                                                 "
-puts "     ______        __         __     __   __     __  __        ______   ______        ______   __  __     ______        ______     ______     ______   ______    "
-puts "    /\  __ \      /\ \       /\ \   /\ "-.\ \   /\ \/ /       /\__  _\ /\  __ \      /\__  _\ /\ \_\ \   /\  ___\      /\  ___\   /\  __ \   /\  == \ /\  ___\   "
-puts "    \ \  __ \     \ \ \____  \ \ \  \ \ \-.  \  \ \  _"-.     \/_/\ \/ \ \ \/\ \     \/_/\ \/ \ \  __ \  \ \  __\      \ \ \____  \ \  __ \  \ \  _-/ \ \___  \  "
-puts "     \ \_\ \_\     \ \_____\  \ \_\  \ \_\\"\_\  \ \_\ \_\       \ \_\  \ \_____\       \ \_\  \ \_\ \_\  \ \_____\     \ \_____\  \ \_\ \_\  \ \_\    \/\_____\ "
-puts "      \/_/\/_/      \/_____/   \/_/   \/_/ \/_/   \/_/\/_/        \/_/   \/_____/        \/_/   \/_/\/_/   \/_____/      \/_____/   \/_/\/_/   \/_/     \/_____/ "
-puts "                                                                                                                                                                 "
-puts "    
-
-end
-
-
-
 ## Puts out greeting when starting the app
-## Stretch goal: create an ASCII block title
 def welcome
-    blank_spacer(4)                             "                                                                                
+blank_spacer(4)                                                                                                             
 puts "  88b           d88                          88                                                                     "  
 puts "  888b         d888                          88                                                                     "  
 puts "  88`8b       d8'88                          88                                                                     "  
@@ -180,7 +146,6 @@ def my_trips
         else
             blank_spacer(4)
             puts "No such user found. Log your first trip so you can start tracking your foraging."
-            # puts "Press any key to continue"
             return nil
         blank_spacer(2)
         end
@@ -189,8 +154,6 @@ end
 
 
 ## method takes in a mushroom name, then returns all of the areas where it has been foraged.
-## stretch goal, order results by quantity of mushrooms foraged in that area.
-## check out find_each for this query
 def find_new_area
     blank_spacer(4)
     puts "Enter the name of a mushroom to discover new areas you can forage for it."
@@ -222,7 +185,6 @@ end
 
 ## This method prompts a user to type in a location, then returns all of the mushrooms
 ## that have been foraged in that area.
-## come back to this
 def find_new_mushroom
     blank_spacer(4)
     puts "Enter the name of a location to discover new mushrooms in that area."
@@ -251,6 +213,7 @@ def find_new_mushroom
     end
 end
 
+## this method logs a foraging trip. Takes in name, location, mushroom name and quantity then returns trip details
 def log_trip
     blank_spacer(4)
     puts "Let's log your recent foraging trip. Please enter your full name"
@@ -281,8 +244,6 @@ end
 
 
 ## This method udpates the quantity of mushrooms logged in the most recent entry.
-## stretch goal: expand the functionality of this method to include updating
-## one or multiple attributes of the recent entry.
 def update_quantity
 blank_spacer(4)
 puts "Here is your recent trip info:"
@@ -309,7 +270,7 @@ puts "They were found in the #{location.terrain} region of #{location.name}."
 puts "This trip occurred on #{forage.created_at.strftime("%m-%d-%Y")}"
 end
 
-## deletes a foraging instance. 
+## deletes one of your recent foraging instances based on your selection.
 def delete_trip
     trips = my_trips
     blank_spacer(4)
@@ -370,7 +331,8 @@ def my_mushrooms
     mushrooms
 end
 
-## it would be nice to add a toxicity counter to the user to track over time.
+## This method is a probability generator that determines whether the user gets sick or not based on the toxicity of the mushroom.
+## Stretch goal: it would be nice to add a toxicity counter to the user to track over time.
 def chance_of_poison(instance)
     # ["not", "mildly", "moderately", "extremely"]
     poison_level = instance.poison_level
@@ -407,6 +369,7 @@ def chance_of_poison(instance)
     blank_spacer(2)
 end
 
+## This method puts out a series of messages if your mushroom was a magic mushroom
 def magic_title
     blank_spacer(4)
     puts "▄▄▄█████▓ ██░ ██  ▄▄▄     ▄▄▄█████▓    █     █░ ▄▄▄        ██████                    "
@@ -456,6 +419,7 @@ def magic_title
     end
 end
 
+## This method calculates the chance of your mushroom being a magic mushroom.
 def chance_of_magic
     if rand(1..100) > 95
         magic_title
@@ -463,24 +427,22 @@ def chance_of_magic
         return
     end
 end
-## This method calls on my_mushrooms to return the mushrooms that you have harvested.
-## You can pick a mushroom from there then it will puts out a message based on the
-## effect of the mushroom. Effect is based on poison level and random instances.
 
+## You can pick a mushroom from the list of all mushroom then it will puts out a message based on the
+## effect of the mushroom. Effect is based on poison level and random instances.
 def eat_a_mushroom
     blank_spacer(2)
     puts "So you want to eat a mushroom? Type one of the mushrooms below to try it:"
     blank_spacer(2)
-    
     Mushroom.all.each {|mushroom| puts mushroom.name}
     blank_spacer(4)
     user_input = gets.chomp.downcase.titleize
     mushroom = Mushroom.find_by(name: user_input)
-    # insert method for running chance of getting poisoned.
     chance_of_poison(mushroom)
     chance_of_magic
 end
 
+## This method is called after each method to ask user if they'd like to perform another command or quit program.
 def more_commands?
     puts "Would you like to do anything else? Type YES to return to the menu or NO to exit the program"
     blank_spacer(2)
@@ -493,7 +455,6 @@ def more_commands?
 end
 
 ## this method identifies the user's menu input and loads the appropriate method.
-## Stretch goal: give error message if unknown prompt is entered, allow user to exit program, return to menu after command is run
 def menu_selection
     user_input = gets.chomp.downcase
     while user_input != "exit" do
@@ -570,12 +531,7 @@ end
 ###### Also need to clean up the poisonous / edible options. COMPLETE
 ###### remove duplicates from #find_new_mushroom COMPLETE
 ###### Stretch method - #my_mushrooms lists out all of your mushrooms from all of your trips. COMPLETE
-
-## Stretch method - Eat A Mushroom? Will puts out different things based on the edibility or poison content of the mushroom. 
-## calls on #my_mushrooms to see which you have.    
-## Stretch method - Add credits method
-## Stretch method - Change #delete_trip to delete trips based on forage id #.
-## This will allow user to delete records in bulk
+###### Stretch method - #Eat_A_Mushroom Will puts out different things based on the edibility or poison content of the mushroom. COMPLETE
 
 
 ## FOR FRIDAY
@@ -583,5 +539,10 @@ end
 
 ###### Simplify eat a mushroom so that you can either type in a mushroom name or random and you will eat that mushroom. COMPLETE
 ###### then you write a helper method to determine the percentage change of being poisoned or otherwise. COMPLETE
-# Final test of all methods
-# record video detailing my app
+###### Final test of all methods COMPLETE
+
+
+## FEATURES THAT WOULD BE NICE TO ADD IN THE FUTURE
+## record video detailing my app
+## Stretch method - Add credits method
+## Stretch method - Change #delete_trip to optionally delete trips based on forage id #. This will allow user to delete records in bulk
