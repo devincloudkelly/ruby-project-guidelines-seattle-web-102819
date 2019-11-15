@@ -15,6 +15,10 @@ To install:
 
 - Run 'bundle install' to install all required gems.
 
+- Run 'rake db:migrate' to build your database.
+
+- Run 'rake db:seed' to seed your data.
+
 - Run the program in your terminal with 'ruby bin/run.rb'
 
 
@@ -24,7 +28,7 @@ To install:
 ## Acknowledgements
 
 Thanks to @moliver4 for recommending the 'activerecord-reset-pk-sequence' gem.
-Thanks to @zamudio and @moliver4 for thie help with control flow.
+Thanks to @zamudio and @moliver4 for the help with control flow.
 
 ## License
 Created by Devin Kelly, November, 2019.
