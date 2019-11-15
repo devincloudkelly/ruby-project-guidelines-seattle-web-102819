@@ -208,7 +208,7 @@ def log_trip
     blank_spacer(2)
     puts "Thank you. Which mushroom did you forage?"
     mush_input = gets.chomp.downcase.titleize
-    mushroom = Mushroom.find_or_create_by(name: mush_input)
+    mushroom = Mushroom.find_or_create_by(name: mush_input) #{|mush| mush.poisonous? ["not", "mildly", "moderately", "extremely"].sample}
     blank_spacer(2)
     puts "Great - lastly, how many #{mushroom.name} mushrooms did you harvest on this trip?"
     qty_input = gets.chomp
@@ -404,6 +404,7 @@ def eat_a_mushroom
     blank_spacer(2)
     
     Mushroom.all.each {|mushroom| puts mushroom.name}
+    blank_spacer(4)
     user_input = gets.chomp.downcase.titleize
     mushroom = Mushroom.find_by(name: user_input)
     # insert method for running chance of getting poisoned.
