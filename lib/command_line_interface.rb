@@ -112,7 +112,7 @@ end
 ## It puts out only the vital trip info for each trip.
 def my_trips
     blank_spacer(4)
-    puts "  Enter your full name to see your 5 most recent trips."
+    puts "  Please enter your full name."
     puts ""
     user_input = gets.chomp.downcase
         user = User.find_by(name: "#{user_input.titleize}")
@@ -258,7 +258,6 @@ end
 def delete_trip
     trips = my_trips
     blank_spacer(4)
-    # binding.pry
     if trips == nil
         return
     else
@@ -316,6 +315,31 @@ def my_mushrooms
     mushrooms
 end
 
+
+## This method calls on my_mushrooms to return the mushrooms that you have harvested.
+## You can pick a mushroom from there then it will puts out a message based on the
+## effect of the mushroom. Effect is based on poison level and random instances.
+
+def eat_a_mushroom
+    blank_spacer(2)
+    puts "So you want to eat a mushroom? Let's see what mushrooms you currently have"
+    blank_spacer(2)
+    mushrooms = my_mushrooms
+    puts "Type the name of the mushroom you would like to try:"
+    # validate the user has said mushroom
+    # pull up mushroom instance to get poison info
+    # run percentage based on poison info
+    # return variable statement based on percentage
+    user_input = gets.chomp.downcase.titleize
+    if user_input == Mushroom.find(id).name
+        shroom = Mushroom.find(id)
+        puts shroom.poisonous?
+    else
+        puts "Sorry, you don't have any of those mushrooms."
+    end
+
+end
+
 def more_commands?
     puts "Would you like to do anything else? Type YES to return to the menu or NO to exit the program"
     blank_spacer(2)
@@ -368,6 +392,10 @@ def menu_selection
             my_mushrooms
             more_commands?
             break
+        elsif user_input = "eat a mushroom"
+            eat_a_mushroom
+            more_commands?
+            break
         else
             blank_spacer(4)
             puts "I'm sorry, that isn't an available command. Please type MENU to see all"
@@ -383,12 +411,7 @@ def menu_selection
     end
 end
 
-# def eat_a_mushroom
-#     blank_spacer(2)
-#     puts "Do you want to eat one of your mushrooms or a random one?"
-#     puts ""
-#     user_input = gets.chomp.downcase
-# end
+
 
 ## For Thursday:
 ###### Finalize control flow of each method and the run file  COMPLETE
@@ -410,3 +433,12 @@ end
 ## Potential methods
 ## Change #delete_trip to delete trips based on forage id #.
 ## This will allow user to delete records in bulk
+
+
+## FOR FRIDAY
+
+
+# Simplify eat a mushroom so that you can either type in a mushroom name or random and you will eat that mushroom.
+# then you write a helper method to determine the percentage change of being poisoned or otherwise.
+# Final test of all methods
+# record video detailing my app
