@@ -6,10 +6,10 @@ def blank_spacer(num)
     end
 end
 
-## This helper method advises if the user input is invalid and returns an error message
-# def input_invalid(required_input)
-    
-# end
+def puts_name(model)
+    capital_model = model.titleize
+    model = capital_model.all.each {|model| puts model.name}
+end
 
 ## Puts out greeting when starting the app
 ## Stretch goal: create an ASCII block title
@@ -315,29 +315,100 @@ def my_mushrooms
     mushrooms
 end
 
+## it would be nice to add a toxicity counter to the user to track over time.
+def chance_of_poison(instance)
+    # ["not", "mildly", "moderately", "extremely"]
+    poison_level = instance.poisonous?
+    blank_spacer(2)
+    if poison_level == "not"
+        blank_spacer(2)
+        puts "Congrats, that wasn't a poisonous mushroom."
+    elsif poison_level == "mildly"
+        puts "That was a mildly poisonous mushroom."
+        if [true, false, false, false, false].sample == true
+            blank_spacer(2)
+            puts "Ohhh, you don't look so good. You shouldn't eat anymore of those mushrooms"
+        else
+            blank_spacer(2)
+            puts "You experienced no ill-effects. Looks like you're safe this time..."
+        end
+    elsif poison_level == "moderately"
+        puts "That was a moderately poisonous mushroom."
+        if [true, false].sample == true
+            blank_spacer(2)
+            puts "Enjoy vomiting all night. And all day tomorrow."
+        else
+            blank_spacer(2)
+            puts "It seems this mushroom didn't affect you..."
+        end
+    elsif poison_level == "extremely"
+        blank_spacer(2)
+        puts "That mushroom was EXTREMELY poisonous!!!"
+        blank_spacer(2)
+        15.times do 
+            puts "You are dead."
+        end
+    end
+    blank_spacer(2)
+end
 
+def magic_title
+    blank_spacer(4)
+    puts "▄▄▄█████▓ ██░ ██  ▄▄▄     ▄▄▄█████▓    █     █░ ▄▄▄        ██████                    "
+    puts "▓  ██▒ ▓▒▓██░ ██▒▒████▄   ▓  ██▒ ▓▒   ▓█░ █ ░█░▒████▄    ▒██    ▒                    "
+    puts "▒ ▓██░ ▒░▒██▀▀██░▒██  ▀█▄ ▒ ▓██░ ▒░   ▒█░ █ ░█ ▒██  ▀█▄  ░ ▓██▄                      "
+    puts "░ ▓██▓ ░ ░▓█ ░██ ░██▄▄▄▄██░ ▓██▓ ░    ░█░ █ ░█ ░██▄▄▄▄██   ▒   ██▒                   "
+    puts "  ▒██▒ ░ ░▓█▒░██▓ ▓█   ▓██▒ ▒██▒ ░    ░░██▒██▓  ▓█   ▓██▒▒██████▒▒                   "
+    puts "  ▒ ░░    ▒ ░░▒░▒ ▒▒   ▓▒█░ ▒ ░░      ░ ▓░▒ ▒   ▒▒   ▓▒█░▒ ▒▓▒ ▒ ░                   "
+    puts "    ░     ▒ ░▒░ ░  ▒   ▒▒ ░   ░         ▒ ░ ░    ▒   ▒▒ ░░ ░▒  ░ ░                   "
+    puts "  ░       ░  ░░ ░  ░   ▒    ░           ░   ░    ░   ▒   ░  ░  ░                     "
+    puts "          ░  ░  ░      ░  ░               ░          ░  ░      ░                     "
+    puts "                                                                                     "
+    puts " ▄▄▄          ███▄ ▄███▓ ▄▄▄        ▄████  ██▓ ▄████▄                                "
+    puts "▒████▄       ▓██▒▀█▀ ██▒▒████▄     ██▒ ▀█▒▓██▒▒██▀ ▀█                                "
+    puts "▒██  ▀█▄     ▓██    ▓██░▒██  ▀█▄  ▒██░▄▄▄░▒██▒▒▓█    ▄                               "
+    puts "░██▄▄▄▄██    ▒██    ▒██ ░██▄▄▄▄██ ░▓█  ██▓░██░▒▓▓▄ ▄██▒                              "
+    puts " ▓█   ▓██▒   ▒██▒   ░██▒ ▓█   ▓██▒░▒▓███▀▒░██░▒ ▓███▀ ░                              "
+    puts " ▒▒   ▓▒█░   ░ ▒░   ░  ░ ▒▒   ▓▒█░ ░▒   ▒ ░▓  ░ ░▒ ▒  ░                              "
+    puts "  ▒   ▒▒ ░   ░  ░      ░  ▒   ▒▒ ░  ░   ░  ▒ ░  ░  ▒                                 "
+    puts "  ░   ▒      ░      ░     ░   ▒   ░ ░   ░  ▒ ░░                                      "
+    puts "      ░  ░          ░         ░  ░      ░  ░  ░ ░                                    "
+    puts "                                              ░                                      "
+    puts " ███▄ ▄███▓ █    ██   ██████  ██░ ██  ██▀███   ▒█████   ▒█████   ███▄ ▄███▓          "
+    puts "▓██▒▀█▀ ██▒ ██  ▓██▒▒██    ▒ ▓██░ ██▒▓██ ▒ ██▒▒██▒  ██▒▒██▒  ██▒▓██▒▀█▀ ██▒          "
+    puts "▓██    ▓██░▓██  ▒██░░ ▓██▄   ▒██▀▀██░▓██ ░▄█ ▒▒██░  ██▒▒██░  ██▒▓██    ▓██░          "
+    puts "▒██    ▒██ ▓▓█  ░██░  ▒   ██▒░▓█ ░██ ▒██▀▀█▄  ▒██   ██░▒██   ██░▒██    ▒██           "
+    puts "▒██▒   ░██▒▒▒█████▓ ▒██████▒▒░▓█▒░██▓░██▓ ▒██▒░ ████▓▒░░ ████▓▒░▒██▒   ░██▒ ██▓  ██▓ "
+    puts "░ ▒░   ░  ░░▒▓▒ ▒ ▒ ▒ ▒▓▒ ▒ ░ ▒ ░░▒░▒░ ▒▓ ░▒▓░░ ▒░▒░▒░ ░ ▒░▒░▒░ ░ ▒░   ░  ░ ▒▓▒  ▒▓▒ "
+    puts "░  ░      ░░░▒░ ░ ░ ░ ░▒  ░ ░ ▒ ░▒░ ░  ░▒ ░ ▒░  ░ ▒ ▒░   ░ ▒ ▒░ ░  ░      ░ ░▒   ░▒  "
+    puts "░      ░    ░░░ ░ ░ ░  ░  ░   ░  ░░ ░  ░░   ░ ░ ░ ░ ▒  ░ ░ ░ ▒  ░      ░    ░    ░   "
+    puts "       ░      ░           ░   ░  ░  ░   ░         ░ ░      ░ ░         ░     ░    ░  "
+    puts "                                                                             ░    ░  "
+    blank_spacer(4)
+end
+
+def chance_of_magic
+    if rand(1..100) > 95
+        magic_title
+    else
+        return
+    end
+end
 ## This method calls on my_mushrooms to return the mushrooms that you have harvested.
 ## You can pick a mushroom from there then it will puts out a message based on the
 ## effect of the mushroom. Effect is based on poison level and random instances.
 
 def eat_a_mushroom
     blank_spacer(2)
-    puts "So you want to eat a mushroom? Let's see what mushrooms you currently have"
+    puts "So you want to eat a mushroom? Type one of the mushrooms below to try it:"
     blank_spacer(2)
-    mushrooms = my_mushrooms
-    puts "Type the name of the mushroom you would like to try:"
-    # validate the user has said mushroom
-    # pull up mushroom instance to get poison info
-    # run percentage based on poison info
-    # return variable statement based on percentage
+    
+    Mushroom.all.each {|mushroom| puts mushroom.name}
     user_input = gets.chomp.downcase.titleize
-    if user_input == Mushroom.find(id).name
-        shroom = Mushroom.find(id)
-        puts shroom.poisonous?
-    else
-        puts "Sorry, you don't have any of those mushrooms."
-    end
-
+    mushroom = Mushroom.find_by(name: user_input)
+    # insert method for running chance of getting poisoned.
+    chance_of_poison(mushroom)
+    chance_of_magic
 end
 
 def more_commands?
@@ -388,11 +459,11 @@ def menu_selection
             delete_trip
             more_commands?
             break
-        elsif user_input = "my mushrooms"
+        elsif user_input == "my mushrooms"
             my_mushrooms
             more_commands?
             break
-        elsif user_input = "eat a mushroom"
+        elsif user_input == "eat a mushroom"
             eat_a_mushroom
             more_commands?
             break
@@ -425,13 +496,11 @@ end
 ###### Also need to clean up the poisonous / edible options. COMPLETE
 ###### remove duplicates from #find_new_mushroom COMPLETE
 ###### Stretch method - #my_mushrooms lists out all of your mushrooms from all of your trips. COMPLETE
-## Stretch  method - Eat A Mushroom? Will puts out different things based on the edibility or poison content of the mushroom. 
+
+## Stretch method - Eat A Mushroom? Will puts out different things based on the edibility or poison content of the mushroom. 
 ## calls on #my_mushrooms to see which you have.    
-## Add credits method
-
-
-## Potential methods
-## Change #delete_trip to delete trips based on forage id #.
+## Stretch method - Add credits method
+## Stretch method - Change #delete_trip to delete trips based on forage id #.
 ## This will allow user to delete records in bulk
 
 
