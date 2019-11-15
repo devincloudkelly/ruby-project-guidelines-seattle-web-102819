@@ -21,6 +21,11 @@ To install:
 ## Contributors guide
 
 
+## Acknowledgements
+
+Thanks to @moliver4 for recommending the 'activerecord-reset-pk-sequence' gem.
+Thanks to @zamudio and @moliver4 for thie help with control flow.
+
 ## License
 Created by Devin Kelly, November, 2019.
 
