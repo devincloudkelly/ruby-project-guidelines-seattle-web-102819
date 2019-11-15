@@ -90,7 +90,7 @@ def random_mushroom
     puts "  - The #{mushroom.name} Mushroom - ".upcase
     puts ""
     puts "    This mushroom is primarily found in #{mushroom.habitat}s."
-    puts "  It is #{mushroom.edible? ? "edible" : "NOT edible"} and it is #{mushroom.poisonous?} poisonous."
+    puts "  It is #{mushroom.edible? ? "edible" : "NOT edible"} and it is #{mushroom.poison_level} poisonous."
     puts "  Go foraging #{mushroom.days_after_rain_til_growth} day(s) after rainfall for the"
     puts "  best chance to find the #{mushroom.name} mushroom."
     blank_spacer(4)
@@ -208,7 +208,7 @@ def log_trip
     blank_spacer(2)
     puts "Thank you. Which mushroom did you forage?"
     mush_input = gets.chomp.downcase.titleize
-    mushroom = Mushroom.find_or_create_by(name: mush_input) #{|mush| mush.poisonous? ["not", "mildly", "moderately", "extremely"].sample}
+    mushroom = Mushroom.find_or_create_by(name: mush_input) {|mush| mush.poison_level = ["not", "mildly", "moderately", "extremely"].sample}
     blank_spacer(2)
     puts "Great - lastly, how many #{mushroom.name} mushrooms did you harvest on this trip?"
     qty_input = gets.chomp
@@ -318,7 +318,7 @@ end
 ## it would be nice to add a toxicity counter to the user to track over time.
 def chance_of_poison(instance)
     # ["not", "mildly", "moderately", "extremely"]
-    poison_level = instance.poisonous?
+    poison_level = instance.poison_level
     blank_spacer(2)
     if poison_level == "not"
         blank_spacer(2)
@@ -330,13 +330,13 @@ def chance_of_poison(instance)
             puts "Ohhh, you don't look so good. You shouldn't eat anymore of those mushrooms"
         else
             blank_spacer(2)
-            puts "You experienced no ill-effects. Looks like you're safe this time..."
+            puts "However, you experienced no ill-effects. Looks like you're safe this time..."
         end
     elsif poison_level == "moderately"
         puts "That was a moderately poisonous mushroom."
         if [true, false].sample == true
             blank_spacer(2)
-            puts "Enjoy vomiting all night. And all day tomorrow."
+            puts "Eating that mushroom has made you ill. Enjoy vomiting all night. And all day tomorrow."
         else
             blank_spacer(2)
             puts "It seems this mushroom didn't affect you..."
@@ -385,6 +385,20 @@ def magic_title
     puts "       ░      ░           ░   ░  ░  ░   ░         ░ ░      ░ ░         ░     ░    ░  "
     puts "                                                                             ░    ░  "
     blank_spacer(4)
+    puts "Let's see if this will be a good trip or a bad trip. Press ENTER to find out..."
+    blank_spacer(4)
+    if [true, false].sample == true
+        puts "Uh-oh. Looks like it's gonna be bad..."
+        blank_spacer(2)
+        rand(25..100).times do
+            puts "#{Faker::Company.catch_phrase || Faker::Company.bs}"
+            user_input = gets.chomp
+            break if user_input == "stop the madness"
+        end
+    else
+        puts "Great news! You've completed your MOD 1 project and have become enlightened!"
+        blank_spacer(2)
+    end
 end
 
 def chance_of_magic
@@ -508,7 +522,7 @@ end
 ## FOR FRIDAY
 
 
-# Simplify eat a mushroom so that you can either type in a mushroom name or random and you will eat that mushroom.
-# then you write a helper method to determine the percentage change of being poisoned or otherwise.
+###### Simplify eat a mushroom so that you can either type in a mushroom name or random and you will eat that mushroom. COMPLETE
+###### then you write a helper method to determine the percentage change of being poisoned or otherwise. COMPLETE
 # Final test of all methods
 # record video detailing my app
